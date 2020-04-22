@@ -1,0 +1,19 @@
+/*
+
+/*/
+
+!.gitignore
+!README.md
+
+# Include the main folders needed
+!Speckle Viewer/
+!docs/
+!docfx/
+
+# Ignore everything inside project folder
+Speckle Viewer/*
+
+# Select which folders become included
+!Speckle Viewer/Assets/
+!Speckle Viewer/ProjectSettings/
+!Speckle Viewer/Packages/
