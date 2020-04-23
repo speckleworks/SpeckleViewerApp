@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479cbe90395c0bd40863dfe4e28a3c81, type: 3}
+  m_Name: New Color By Type
+  m_EditorClassIdentifier: 
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0.8207547, g: 0.29036134, b: 0.29036134, a: 0.7058824}
+    key1: {r: 0.8584906, g: 0.54421544, b: 0.23891956, a: 0.7058824}
+    key2: {r: 0.79571074, g: 0.8113208, b: 0.21813813, a: 0}
+    key3: {r: 0.31278497, g: 0.764151, b: 0.2270826, a: 0}
+    key4: {r: 0.24448201, g: 0.7735849, b: 0.713116, a: 0}
+    key5: {r: 0.2232111, g: 0.4463647, b: 0.8301887, a: 0}
+    key6: {r: 0.551721, g: 0.23268957, b: 0.7830189, a: 0}
+    key7: {r: 0.5756998, g: 0, b: 1, a: 0}
+    ctime0: 0
+    ctime1: 11796
+    ctime2: 23593
+    ctime3: 35389
+    ctime4: 47185
+    ctime5: 56476
+    ctime6: 65535
+    ctime7: 65535
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 7
+    m_NumAlphaKeys: 2
+  colorName: _BaseColor
+  receiveShadows: 0
+  shadowCastingMode: 0
+  colorKey:
+  - name: Mesh/Wall
+    color: {r: 0.22979851, g: 0.5477019, b: 0.7939323, a: 0.7058824}
+  - name: Mesh/Floor
+    color: {r: 0.24418919, g: 0.7690803, b: 0.71472764, a: 0.7058824}
+  - name: Mesh/FamilyInstance
+    color: {r: 0.398683, g: 0.3322312, b: 0.80499315, a: 0.7058824}
+  - name: Mesh/GenericElement
+    color: {r: 0.84226763, g: 0.6132381, b: 0.23354943, a: 0.7058824}
+  - name: Mesh/Column
+    color: {r: 0.2488998, g: 0.7729747, b: 0.68167967, a: 0.7058824}
+  - name: Mesh/Beam
+    color: {r: 0.23212308, g: 0.5834619, b: 0.7811381, a: 0.7058824}
