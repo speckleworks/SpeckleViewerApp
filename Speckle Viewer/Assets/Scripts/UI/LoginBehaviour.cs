@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 using SpeckleUnity;
 using SpeckleCore;
+using MaterialUI;
 
 public class LoginBehaviour : MonoBehaviour
 {
@@ -16,12 +17,24 @@ public class LoginBehaviour : MonoBehaviour
     private string email = "";
     private string password = "";
 
-    public TMP_InputField serverInput;
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
-
     public SpeckleUnityManager manager;
+    public DialogBoxConfig dialog;
+    public NavDrawerConfig navDrawer;
+
+    public InputField serverInput;
+    public InputField emailInput;
+    public InputField passwordInput;
     public Button loginButton;
+    public GameObject errorMessage;
+
+    public Text welcomeLabel;
+
+    private void Start ()
+    {
+        dialog.Open ();
+        loginButton.interactable = false;
+        errorMessage.SetActive (false);
+    }
 
     public void OnServerFieldInput (string input)
     {
@@ -52,13 +65,30 @@ public class LoginBehaviour : MonoBehaviour
     public async void AttemptLogin ()
     {
         manager.SetServerUrl (serverURL);
-        Debug.Log (email);
-        Debug.Log (password);
-        await manager.LoginAsync (email, password, LoginCallback);
+        try
+        {
+            await manager.LoginAsync (email, password, LoginCallback);
+
+        }
+        catch (SpeckleException se)
+        {
+            errorMessage.SetActive (true);
+        }
     }
 
     private void LoginCallback (User loggedInUser)
     {
-        gameObject.SetActive (false);
+        if (!string.IsNullOrWhiteSpace (loggedInUser.Apitoken))
+        {
+            welcomeLabel.text = string.Format ("Welcome {0} {1}", loggedInUser.Name, loggedInUser.Surname);
+
+            errorMessage.SetActive (false);
+            dialog.Close ();
+            navDrawer.Open ();
+        }
+        else
+        { 
+            errorMessage.SetActive (true);
+        }
     }
 }
