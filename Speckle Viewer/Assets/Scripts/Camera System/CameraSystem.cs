@@ -25,44 +25,44 @@ public class CameraSystem : MonoBehaviour
         _XForm_Parent = transform.parent;
     }
 
+    public void FocusOnModel (Bounds modelBounds)
+    {
+        _LocalRotation = new Vector3 (15, 30, 0);
+        _CameraDistance = modelBounds.size.magnitude;
+        _XForm_Parent.position = modelBounds.center;
+    }
 
     void LateUpdate ()
     {
-        if (Input.GetKeyDown (KeyCode.LeftShift))
-            CameraDisabled = !CameraDisabled;
+        if (CameraDisabled) return;
 
-        
-
-        if (!CameraDisabled)
+        if (Input.GetMouseButton (0))
         {
-            if (Input.GetMouseButton (0))
+            //Rotation of the Camera based on Mouse Coordinates
+            if (Input.GetAxis ("Mouse X") != 0 || Input.GetAxis ("Mouse Y") != 0)
             {
-                //Rotation of the Camera based on Mouse Coordinates
-                if (Input.GetAxis ("Mouse X") != 0 || Input.GetAxis ("Mouse Y") != 0)
-                {
-                    _LocalRotation.y += Input.GetAxis ("Mouse X") * MouseSensitivity;
-                    _LocalRotation.x += Input.GetAxis ("Mouse Y") * MouseSensitivity * -1;
+                _LocalRotation.y += Input.GetAxis ("Mouse X") * MouseSensitivity;
+                _LocalRotation.x += Input.GetAxis ("Mouse Y") * MouseSensitivity * -1;
 
-                    //Clamp the y Rotation to horizon and not flipping over at the top
-                    if (_LocalRotation.x < -90f)
-                        _LocalRotation.x = -90f;
-                    else if (_LocalRotation.x > 90f)
-                        _LocalRotation.x = 90f;
-                }
+                //Clamp the y Rotation to horizon and not flipping over at the top
+                if (_LocalRotation.x < -90f)
+                    _LocalRotation.x = -90f;
+                else if (_LocalRotation.x > 90f)
+                    _LocalRotation.x = 90f;
             }
+        }
             
 
-            //Zooming Input from our Mouse Scroll Wheel
-            if (Input.GetAxis ("Mouse ScrollWheel") != 0f)
-            {
-                float ScrollAmount = Input.GetAxis ("Mouse ScrollWheel") * ScrollSensitvity;
+        //Zooming Input from our Mouse Scroll Wheel
+        if (Input.GetAxis ("Mouse ScrollWheel") != 0f)
+        {
+            float ScrollAmount = Input.GetAxis ("Mouse ScrollWheel") * ScrollSensitvity;
 
-                ScrollAmount *= (_CameraDistance * 0.3f);
+            ScrollAmount *= (_CameraDistance * 0.3f);
 
-                _CameraDistance += ScrollAmount * -1f;
+            _CameraDistance += ScrollAmount * -1f;
 
-                _CameraDistance = Mathf.Clamp (_CameraDistance, 1.5f, 100f);
-            }
+            _CameraDistance = Mathf.Clamp (_CameraDistance, 1.5f, 100f);
         }
 
         //Actual Camera Rig Transformations

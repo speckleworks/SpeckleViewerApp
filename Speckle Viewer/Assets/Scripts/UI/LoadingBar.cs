@@ -8,6 +8,7 @@ using MaterialUI;
 public class LoadingBar : MonoBehaviour
 {
     public Image progressBar;
+    public CameraSystem cameraSystem;
 
     private DialogBoxConfig dialogBox;
 
@@ -41,6 +42,8 @@ public class LoadingBar : MonoBehaviour
         {
             modelBounds.Encapsulate (meshes[i].bounds);
         }
+
+        cameraSystem.FocusOnModel (modelBounds);
 
         MaterialPropertyBlock block = new MaterialPropertyBlock ();
 

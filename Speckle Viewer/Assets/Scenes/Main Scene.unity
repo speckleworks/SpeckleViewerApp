@@ -836,8 +836,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2206,6 +2206,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1.1
       objectReference: {fileID: 0}
+    - target: {fileID: 418849041659022348, guid: b966cc67a22bba847a96fb2cc4b67220, type: 3}
+      propertyPath: cameraSystem
+      value: 
+      objectReference: {fileID: 263851086}
     - target: {fileID: 2539169099075370058, guid: b966cc67a22bba847a96fb2cc4b67220, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
