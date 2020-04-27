@@ -13,8 +13,8 @@ public class StreamSelectionBehaviour : MonoBehaviour
     public StreamData streamDataPrefab;
     public Transform dataRoot;
     
-    private DialogBoxConfig dialogBox;
-    private bool initialized = false;
+    protected DialogBoxConfig dialogBox;
+    protected bool initialized = false;
 
 
     // Start is called before the first frame update
@@ -23,7 +23,7 @@ public class StreamSelectionBehaviour : MonoBehaviour
         dialogBox = GetComponent<DialogBoxConfig> ();
     }
 
-    public async void Initialize ()
+    public virtual async void Initialize ()
     {
         dialogBox.Open ();
 
@@ -32,7 +32,7 @@ public class StreamSelectionBehaviour : MonoBehaviour
         await manager.GetAllStreamMetaDataForUserAsync (CompleteInitialization);        
     }
 
-    private void CompleteInitialization (SpeckleStream[] streams)
+    protected virtual void CompleteInitialization (SpeckleStream[] streams)
     {
         for (int i = 0; i < streams.Length; i++)
         {
@@ -44,7 +44,7 @@ public class StreamSelectionBehaviour : MonoBehaviour
         initialized = true;
     }
 
-    public async void OpenStream (SpeckleStream stream)
+    public virtual async void SelectStream (SpeckleStream stream)
     {
         dialogBox.Close ();
         await manager.AddReceiverAsync (stream.StreamId, null, true);

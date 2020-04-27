@@ -1,54 +1,52 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using System.Collections;
 
 public class CameraSystem : MonoBehaviour
 {
 
-    protected Transform _XForm_Camera;
-    protected Transform _XForm_Parent;
+    protected Transform camTransform;
+    protected Transform pivotTransform;
 
-    protected Vector3 _LocalRotation = new Vector3 (15, 30, 0);
-    protected float _CameraDistance = 30f;
+    protected Vector3 eulerRotation = new Vector3 (15, 30, 0);
+    protected float distanceFromPivot = 30f;
 
-    public float MouseSensitivity = 4f;
-    public float ScrollSensitvity = 2f;
-    public float OrbitDampening = 10f;
-    public float ScrollDampening = 6f;
+    public float mouseSensitivity = 4f;
+    public float scrollSensitvity = 2f;
+    public float orbitDampening = 20f;
+    public float scrollDampening = 20f;
 
-    public bool CameraDisabled = false;
+    public bool cameraDisabled = false;
 
 
     // Use this for initialization
     void Start ()
     {
-        _XForm_Camera = transform;
-        _XForm_Parent = transform.parent;
+        camTransform = transform;
+        pivotTransform = transform.parent;
     }
 
     public void FocusOnModel (Bounds modelBounds)
     {
-        _LocalRotation = new Vector3 (15, 30, 0);
-        _CameraDistance = modelBounds.size.magnitude;
-        _XForm_Parent.position = modelBounds.center;
+        eulerRotation = new Vector3 (15, 30, 0);
+        distanceFromPivot = modelBounds.size.magnitude;
+        pivotTransform.position = modelBounds.center;
     }
 
     void LateUpdate ()
     {
-        if (CameraDisabled) return;
+        if (cameraDisabled) return;
+        if (InputValidation.IsPointerOverUIObject ()) return;
 
         if (Input.GetMouseButton (0))
         {
             //Rotation of the Camera based on Mouse Coordinates
             if (Input.GetAxis ("Mouse X") != 0 || Input.GetAxis ("Mouse Y") != 0)
             {
-                _LocalRotation.y += Input.GetAxis ("Mouse X") * MouseSensitivity;
-                _LocalRotation.x += Input.GetAxis ("Mouse Y") * MouseSensitivity * -1;
+                eulerRotation.y += Input.GetAxis ("Mouse X") * mouseSensitivity; // horizontal rotation is along the y axis
+                eulerRotation.x += Input.GetAxis ("Mouse Y") * mouseSensitivity * -1;
 
-                //Clamp the y Rotation to horizon and not flipping over at the top
-                if (_LocalRotation.x < -90f)
-                    _LocalRotation.x = -90f;
-                else if (_LocalRotation.x > 90f)
-                    _LocalRotation.x = 90f;
+                eulerRotation.x = Mathf.Clamp (eulerRotation.x, -90f, 90f);
             }
         }
             
@@ -56,22 +54,22 @@ public class CameraSystem : MonoBehaviour
         //Zooming Input from our Mouse Scroll Wheel
         if (Input.GetAxis ("Mouse ScrollWheel") != 0f)
         {
-            float ScrollAmount = Input.GetAxis ("Mouse ScrollWheel") * ScrollSensitvity;
+            float scrollAmount = Input.GetAxis ("Mouse ScrollWheel") * scrollSensitvity;
 
-            ScrollAmount *= (_CameraDistance * 0.3f);
+            scrollAmount *= (distanceFromPivot * 0.3f);
 
-            _CameraDistance += ScrollAmount * -1f;
+            distanceFromPivot += scrollAmount * -1f;
 
-            _CameraDistance = Mathf.Clamp (_CameraDistance, 1.5f, 100f);
+            distanceFromPivot = Mathf.Clamp (distanceFromPivot, 1.5f, 100f);
         }
 
         //Actual Camera Rig Transformations
-        Quaternion QT = Quaternion.Euler (_LocalRotation.x, _LocalRotation.y, 0);
-        _XForm_Parent.rotation = Quaternion.Lerp (_XForm_Parent.rotation, QT, Time.deltaTime * OrbitDampening);
+        Quaternion QT = Quaternion.Euler (eulerRotation.x, eulerRotation.y, 0);
+        pivotTransform.rotation = Quaternion.Lerp (pivotTransform.rotation, QT, Time.deltaTime * orbitDampening);
 
-        if (_XForm_Camera.localPosition.z != _CameraDistance * -1f)
+        if (camTransform.localPosition.z != distanceFromPivot * -1f)
         {
-            _XForm_Camera.localPosition = new Vector3 (0f, 0f, Mathf.Lerp (_XForm_Camera.localPosition.z, _CameraDistance * -1f, Time.deltaTime * ScrollDampening));
+            camTransform.localPosition = new Vector3 (0f, 0f, Mathf.Lerp (camTransform.localPosition.z, distanceFromPivot * -1f, Time.deltaTime * scrollDampening));
         }
     }
 }

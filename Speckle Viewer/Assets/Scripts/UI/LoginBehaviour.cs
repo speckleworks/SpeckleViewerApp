@@ -15,8 +15,8 @@ public class LoginBehaviour : MonoBehaviour
     private bool passwordFieldHasInput = false;
 
     private string serverURL = "https://hestia.speckle.works/api/";
-    private string email = "email";
-    private string password = "password";
+    private string email = "";
+    private string password = "";
 
     public SpeckleUnityManager manager;
     public DialogBoxConfig dialog;

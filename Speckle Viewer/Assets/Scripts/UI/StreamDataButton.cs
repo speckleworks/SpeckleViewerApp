@@ -17,6 +17,6 @@ public class StreamDataButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown (PointerEventData eventData)
     {
-        selector.OpenStream (stream);
+        selector.SelectStream (stream);
     }
 }

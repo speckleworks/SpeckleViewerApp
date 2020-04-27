@@ -7,6 +7,7 @@ using MaterialUI;
 public class NavDrawerBehaviour : MonoBehaviour
 {
     public StreamSelectionBehaviour streamSelector;
+    public StreamRemoverBehaviour streamRemover;
 
     private NavDrawerConfig navDrawer;
 
@@ -24,7 +25,8 @@ public class NavDrawerBehaviour : MonoBehaviour
     }
 
     public void OnRemoveStream ()
-    { 
+    {
+        streamRemover.Initialize ();
         navDrawer.Close ();
     }
 
