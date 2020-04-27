@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,8 @@ public class StreamSelectionBehaviour : MonoBehaviour
     public Transform dataRoot;
     
     protected DialogBoxConfig dialogBox;
-    protected bool initialized = false;
+
+    [SerializeField] private DialogBoxConfig errorDialog;
 
 
     // Start is called before the first frame update
@@ -27,13 +29,23 @@ public class StreamSelectionBehaviour : MonoBehaviour
     {
         dialogBox.Open ();
 
-        if (initialized) return;
-
-        await manager.GetAllStreamMetaDataForUserAsync (CompleteInitialization);        
+        try
+        {
+            await manager.GetAllStreamMetaDataForUserAsync (CompleteInitialization);
+        }
+        catch (Exception e)
+        {
+            HandleError ();
+        }
     }
 
     protected virtual void CompleteInitialization (SpeckleStream[] streams)
     {
+        foreach (Transform child in dataRoot)
+        {
+            Destroy (child.gameObject);
+        }
+
         for (int i = 0; i < streams.Length; i++)
         {
             Instantiate (dividerPrefab, dataRoot);
@@ -41,12 +53,25 @@ public class StreamSelectionBehaviour : MonoBehaviour
         }
 
         Instantiate (dividerPrefab, dataRoot);
-        initialized = true;
     }
 
     public virtual async void SelectStream (SpeckleStream stream)
     {
         dialogBox.Close ();
-        await manager.AddReceiverAsync (stream.StreamId, null, true);
+
+        try
+        {
+            await manager.AddReceiverAsync (stream.StreamId, null, true);
+        }
+        catch (Exception e)
+        {
+            HandleError ();
+        }
+    }
+
+    protected virtual void HandleError ()
+    {
+        dialogBox.Close ();
+        errorDialog.Open ();
     }
 }

@@ -18,6 +18,9 @@ public class LoginBehaviour : MonoBehaviour
     private string email = "";
     private string password = "";
 
+    public bool useInjectedValues = true;
+    public UserCredentials credentials;
+
     public SpeckleUnityManager manager;
     public DialogBoxConfig dialog;
     public StreamSelectionBehaviour streamSelection;
@@ -33,7 +36,14 @@ public class LoginBehaviour : MonoBehaviour
     private void Start ()
     {
         dialog.Open ();
-        //loginButton.interactable = false;
+
+        if (useInjectedValues)
+        { 
+            loginButton.interactable = true;
+            email = credentials.email;
+            password = credentials.password;
+        }
+        
         errorMessage.gameObject.SetActive (false);
     }
 

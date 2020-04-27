@@ -9,8 +9,6 @@ public class StreamRemoverBehaviour : StreamSelectionBehaviour
     {
         dialogBox.Open ();
 
-        if (initialized) return;
-
         CompleteInitialization (manager.GetCurrentReceivedStreamMetaData ());
     }
 

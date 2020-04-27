@@ -7,6 +7,7 @@ using MaterialUI;
 
 public class LoadingBar : MonoBehaviour
 {
+    public SpeckleUnityManager manager;
     public Image progressBar;
     public CameraSystem cameraSystem;
 
@@ -36,13 +37,7 @@ public class LoadingBar : MonoBehaviour
     {
         MeshRenderer[] meshes = streamParent.GetComponentsInChildren<MeshRenderer> ();
 
-        Bounds modelBounds = meshes[0].bounds;
-
-        for (int i = 1; i < meshes.Length; i++)
-        {
-            modelBounds.Encapsulate (meshes[i].bounds);
-        }
-
+        Bounds modelBounds = manager.GetBoundsForAllReceivedStreams ();
         cameraSystem.FocusOnModel (modelBounds);
 
         MaterialPropertyBlock block = new MaterialPropertyBlock ();
