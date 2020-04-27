@@ -462,6 +462,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stream Adder Dialog Box
       objectReference: {fileID: 0}
+    - target: {fileID: 11448930, guid: 082542cfbb8fa9f4297abec3067902cc, type: 3}
+      propertyPath: m_Text
+      value: Add A Stream
+      objectReference: {fileID: 0}
     - target: {fileID: 22448922, guid: 082542cfbb8fa9f4297abec3067902cc, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -1454,6 +1458,10 @@ PrefabInstance:
     - target: {fileID: 148932, guid: 082542cfbb8fa9f4297abec3067902cc, type: 3}
       propertyPath: m_Name
       value: Stream Remover Dialog Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448930, guid: 082542cfbb8fa9f4297abec3067902cc, type: 3}
+      propertyPath: m_Text
+      value: Remove A Stream
       objectReference: {fileID: 0}
     - target: {fileID: 22448922, guid: 082542cfbb8fa9f4297abec3067902cc, type: 3}
       propertyPath: m_AnchoredPosition.x
