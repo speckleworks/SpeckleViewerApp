@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using SpeckleUnity;
 using SpeckleCore;
 using MaterialUI;
+using System.Threading.Tasks;
 
 public class LoginBehaviour : MonoBehaviour
 {
@@ -14,26 +15,26 @@ public class LoginBehaviour : MonoBehaviour
     private bool passwordFieldHasInput = false;
 
     private string serverURL = "https://hestia.speckle.works/api/";
-    private string email = "";
-    private string password = "";
+    private string email = "email";
+    private string password = "password";
 
     public SpeckleUnityManager manager;
     public DialogBoxConfig dialog;
-    public NavDrawerConfig navDrawer;
+    public StreamSelectionBehaviour streamSelection;
 
     public InputField serverInput;
     public InputField emailInput;
     public InputField passwordInput;
     public Button loginButton;
-    public GameObject errorMessage;
+    public Text errorMessage;
 
     public Text welcomeLabel;
 
     private void Start ()
     {
         dialog.Open ();
-        loginButton.interactable = false;
-        errorMessage.SetActive (false);
+        //loginButton.interactable = false;
+        errorMessage.gameObject.SetActive (false);
     }
 
     public void OnServerFieldInput (string input)
@@ -65,6 +66,7 @@ public class LoginBehaviour : MonoBehaviour
     public async void AttemptLogin ()
     {
         manager.SetServerUrl (serverURL);
+
         try
         {
             await manager.LoginAsync (email, password, LoginCallback);
@@ -72,7 +74,13 @@ public class LoginBehaviour : MonoBehaviour
         }
         catch (SpeckleException se)
         {
-            errorMessage.SetActive (true);
+            errorMessage.gameObject.SetActive (true);
+            errorMessage.text = "The email or password was incorrect. Please try again.";
+        }
+        catch (TaskCanceledException tce)
+        {
+            errorMessage.gameObject.SetActive (true);
+            errorMessage.text = "The server didn't respond in time. Please try again.";
         }
     }
 
@@ -82,13 +90,14 @@ public class LoginBehaviour : MonoBehaviour
         {
             welcomeLabel.text = string.Format ("Welcome {0} {1}", loggedInUser.Name, loggedInUser.Surname);
 
-            errorMessage.SetActive (false);
+            errorMessage.gameObject.SetActive (false);
             dialog.Close ();
-            navDrawer.Open ();
+            streamSelection.Initialize ();
         }
         else
         { 
-            errorMessage.SetActive (true);
+            errorMessage.gameObject.SetActive (true);
+            errorMessage.text = "Login failed. Please try again.";
         }
     }
 }

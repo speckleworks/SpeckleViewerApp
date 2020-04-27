@@ -6,7 +6,10 @@ using MaterialUI;
 
 public class NavDrawerBehaviour : MonoBehaviour
 {
+    public StreamSelectionBehaviour streamSelector;
+
     private NavDrawerConfig navDrawer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -15,13 +18,14 @@ public class NavDrawerBehaviour : MonoBehaviour
     }
 
     public void OnAddStream ()
-    { 
-        
+    {
+        streamSelector.Initialize ();
+        navDrawer.Close ();
     }
 
     public void OnRemoveStream ()
     { 
-        
+        navDrawer.Close ();
     }
 
     public void OnLogout ()
