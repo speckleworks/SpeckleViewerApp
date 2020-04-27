@@ -3,6 +3,7 @@
 /*/
 
 !.gitignore
+!LICENSE
 !README.md
 
 # Include the main folders needed
