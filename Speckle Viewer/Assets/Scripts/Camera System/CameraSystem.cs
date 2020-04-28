@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 using System.Collections;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class CameraSystem : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class CameraSystem : MonoBehaviour
     protected float distanceFromPivot = 30f;
 
     public float mouseSensitivity = 4f;
+    public float touchSensitivity = 0.2f;
     public float scrollSensitvity = 2f;
     public float orbitDampening = 20f;
     public float scrollDampening = 20f;
@@ -24,12 +27,14 @@ public class CameraSystem : MonoBehaviour
     {
         camTransform = transform;
         pivotTransform = transform.parent;
+
+        EnhancedTouchSupport.Enable ();
     }
 
     public void FocusOnModel (Bounds modelBounds)
     {
         eulerRotation = new Vector3 (15, 30, 0);
-        distanceFromPivot = modelBounds.size.magnitude + 0.8f;
+        distanceFromPivot = modelBounds.size.magnitude * 0.75f;
         pivotTransform.position = modelBounds.center;
     }
 
@@ -38,18 +43,32 @@ public class CameraSystem : MonoBehaviour
         if (cameraDisabled) return;
         if (InputValidation.IsPointerOverUIObject ()) return;
 
+        ApplyDesktopInput ();
+        ApplyTouchInput ();                
+
+        //Actual Camera Rig Transformations
+        Quaternion QT = Quaternion.Euler (eulerRotation.x, eulerRotation.y, 0);
+        pivotTransform.rotation = Quaternion.Lerp (pivotTransform.rotation, QT, Time.deltaTime * orbitDampening);
+
+        if (camTransform.localPosition.z != distanceFromPivot * -1f)
+        {
+            camTransform.localPosition = new Vector3 (0f, 0f, Mathf.Lerp (camTransform.localPosition.z, distanceFromPivot * -1f, Time.deltaTime * scrollDampening));
+        }
+    }
+
+    private void ApplyDesktopInput ()
+    {
         if (Input.GetMouseButton (0))
         {
             //Rotation of the Camera based on Mouse Coordinates
             if (Input.GetAxis ("Mouse X") != 0 || Input.GetAxis ("Mouse Y") != 0)
             {
                 eulerRotation.y += Input.GetAxis ("Mouse X") * mouseSensitivity; // horizontal rotation is along the y axis
-                eulerRotation.x += Input.GetAxis ("Mouse Y") * mouseSensitivity * -1;
+                eulerRotation.x -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
 
                 eulerRotation.x = Mathf.Clamp (eulerRotation.x, -90f, 90f);
             }
         }
-            
 
         //Zooming Input from our Mouse Scroll Wheel
         if (Input.GetAxis ("Mouse ScrollWheel") != 0f)
@@ -62,14 +81,16 @@ public class CameraSystem : MonoBehaviour
 
             distanceFromPivot = Mathf.Clamp (distanceFromPivot, 1.5f, 100f);
         }
+    }
 
-        //Actual Camera Rig Transformations
-        Quaternion QT = Quaternion.Euler (eulerRotation.x, eulerRotation.y, 0);
-        pivotTransform.rotation = Quaternion.Lerp (pivotTransform.rotation, QT, Time.deltaTime * orbitDampening);
-
-        if (camTransform.localPosition.z != distanceFromPivot * -1f)
+    private void ApplyTouchInput ()
+    {
+        if (Touch.activeTouches.Count > 0)
         {
-            camTransform.localPosition = new Vector3 (0f, 0f, Mathf.Lerp (camTransform.localPosition.z, distanceFromPivot * -1f, Time.deltaTime * scrollDampening));
+            eulerRotation.y += Touch.activeTouches[0].delta.x * touchSensitivity;
+            eulerRotation.x -= Touch.activeTouches[0].delta.y * touchSensitivity;
+
+            eulerRotation.x = Mathf.Clamp (eulerRotation.x, -90f, 90f);
         }
     }
 }

@@ -293,7 +293,7 @@ MonoBehaviour:
   dividerPrefab: {fileID: 132128, guid: b72eac2f7b2219346ac30be5ae66f0dc, type: 3}
   streamDataPrefab: {fileID: -7743636714421136102, guid: ea2a2b6c1a4deda44b57487ae72953ba, type: 3}
   dataRoot: {fileID: 2114709467}
-  errorDialog: {fileID: 0}
+  errorDialog: {fileID: 578378543}
 --- !u!224 &36885948 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 22448932, guid: 082542cfbb8fa9f4297abec3067902cc, type: 3}
@@ -814,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 4
+  touchSensitivity: 0.2
   scrollSensitvity: 2
   orbitDampening: 20
   scrollDampening: 20
@@ -1048,9 +1049,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Nav Drawer
       objectReference: {fileID: 0}
+    - target: {fileID: 11454286, guid: e07df7de26af1e34e9de5271838ce87b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 797cb35038f43b14cba3d3036d08ed9e, type: 3}
     - target: {fileID: 11454294, guid: e07df7de26af1e34e9de5271838ce87b, type: 3}
       propertyPath: m_Text
-      value: Speckle Viewer v0.1.0a
+      value: Speckle Viewer v0.2.0a
       objectReference: {fileID: 0}
     - target: {fileID: 11454300, guid: e07df7de26af1e34e9de5271838ce87b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1599,6 +1604,17 @@ MonoBehaviour:
   streamDataPrefab: {fileID: 4284069231333763393, guid: e10f048ff949aec47ab96fe7c15cd2c8, type: 3}
   dataRoot: {fileID: 517812424}
   errorDialog: {fileID: 0}
+--- !u!114 &578378543 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11414586, guid: aa1074633aaef0347819d09f4cd681db, type: 3}
+  m_PrefabInstance: {fileID: 1582266169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9c3ac3231ee844ab57c6f29c644a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
