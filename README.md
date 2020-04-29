@@ -17,5 +17,4 @@ In this repository you will find the source code, assets and project settings of
 | ~0.1~   | ~Material UI framework and orbiting streamed objects~   						 |
 | ~0.2~   | ~Touch support and focussing view on streams~       							 |
 | 0.3     | Select objects and inspect their data			                                 |
-| 0.4     | Scale some UI panels according to screen dimensions		    	                 |
 | 1.0     | Toggle Augmented Reality view to place, move and scale a world anchor in AR      |

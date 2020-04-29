@@ -13,10 +13,13 @@ public class CameraSystem : MonoBehaviour
     protected Vector3 eulerRotation = new Vector3 (15, 30, 0);
     protected float distanceFromPivot = 30f;
 
-    public float mouseSensitivity = 4f;
     public float touchSensitivity = 0.2f;
-    public float scrollSensitvity = 2f;
     public float pinchSensitvity = 0.2f;
+    public float panSensitivity = 0.5f;
+
+    [Space, Space]
+    public float mouseSensitivity = 4f;
+    public float scrollSensitvity = 2f;
     public float orbitDampening = 20f;
     public float scrollDampening = 20f;
 
@@ -47,7 +50,8 @@ public class CameraSystem : MonoBehaviour
         if (cameraDisabled) return;
         if (InputValidation.IsPointerOverUIObject ()) return;
 
-        RegisterDesktopInput ();
+        if (Application.platform != RuntimePlatform.Android)
+            RegisterDesktopInput ();
         RegisterTouchInput ();                
 
         //Actual Camera Rig Transformations
@@ -103,15 +107,16 @@ public class CameraSystem : MonoBehaviour
         {
             float currentPinchDistance = Vector2.Distance (Input.GetTouch (0).position, Input.GetTouch (1).position);
 
-            if (Input.GetTouch (1).phase == TouchPhase.Began)
-            {
-                previousPinchDistance = currentPinchDistance;
-            }
-            else if (Input.GetTouch (1).phase == TouchPhase.Moved)
-            {
-                distanceFromPivot += (previousPinchDistance - currentPinchDistance) * pinchSensitvity;
-            }
+            distanceFromPivot += currentPinchDistance * pinchSensitvity * (currentPinchDistance > previousPinchDistance ? -1 : 1);
+            previousPinchDistance = currentPinchDistance;
         }
+
+        if (Input.touchCount == 3 && Input.GetTouch (0).phase == TouchPhase.Moved)
+        {
+            pivotTransform.Translate (Vector3.right * Input.GetTouch (0).deltaPosition.x * panSensitivity * -1);
+            pivotTransform.Translate (transform.up * Input.GetTouch (0).deltaPosition.y * panSensitivity * -1, Space.World);
+        }
+            
         /*
         if (Touch.activeTouches.Count == 1)
         {

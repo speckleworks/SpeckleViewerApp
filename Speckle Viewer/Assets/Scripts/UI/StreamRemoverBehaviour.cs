@@ -5,6 +5,8 @@ using SpeckleCore;
 
 public class StreamRemoverBehaviour : StreamSelectionBehaviour
 {
+    public CameraSystem cameraSystem;
+
     public override void Initialize ()
     {
         dialogBox.Open ();
@@ -16,5 +18,8 @@ public class StreamRemoverBehaviour : StreamSelectionBehaviour
     {
         dialogBox.Close ();
         manager.RemoveReceiver (stream.StreamId);
+
+        Bounds modelBounds = manager.GetBoundsForAllReceivedStreams ();
+        cameraSystem.FocusOnModel (modelBounds);
     }
 }

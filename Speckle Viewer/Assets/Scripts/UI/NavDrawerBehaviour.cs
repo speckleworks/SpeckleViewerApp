@@ -9,6 +9,7 @@ public class NavDrawerBehaviour : MonoBehaviour
     public StreamSelectionBehaviour streamSelector;
     public StreamRemoverBehaviour streamRemover;
 
+    public DialogBoxConfig helpDialog;
     private NavDrawerConfig navDrawer;
 
 
@@ -28,6 +29,11 @@ public class NavDrawerBehaviour : MonoBehaviour
     {
         streamRemover.Initialize ();
         navDrawer.Close ();
+    }
+
+    public void OnHelp ()
+    {
+        helpDialog.Open ();
     }
 
     public void OnLogout ()

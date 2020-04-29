@@ -73,7 +73,12 @@ public class LoginBehaviour : MonoBehaviour
         loginButton.interactable = serverFieldHasInput && emailFieldHasInput && passwordFieldHasInput;
     }
 
-    public async void AttemptLogin ()
+    public void AttemptLogin ()
+    {
+        _ = RunAsyncLogin ();
+    }
+
+    private async Task RunAsyncLogin ()
     {
         manager.SetServerUrl (serverURL);
 
