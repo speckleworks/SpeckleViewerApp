@@ -814,8 +814,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 4
-  touchSensitivity: 0.2
+  touchSensitivity: 0.01
   scrollSensitvity: 2
+  pinchSensitvity: 0.005
   orbitDampening: 20
   scrollDampening: 20
   cameraDisabled: 0
@@ -2183,7 +2184,7 @@ MonoBehaviour:
   pointMaterial: {fileID: 0}
   scaleFactor: 0.001
   renderingRule: {fileID: 11400000, guid: 7d66ffdb47f1cc445a885cea41fc7b43, type: 2}
-  spawnSpeed: 100
+  spawnSpeed: 10
   onUpdateProgress:
     m_PersistentCalls:
       m_Calls:

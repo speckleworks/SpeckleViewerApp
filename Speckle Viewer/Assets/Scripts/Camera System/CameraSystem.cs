@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.EnhancedTouch;
+//using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem.EnhancedTouch;
 using System.Collections;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+//using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class CameraSystem : MonoBehaviour
 {
@@ -16,19 +16,23 @@ public class CameraSystem : MonoBehaviour
     public float mouseSensitivity = 4f;
     public float touchSensitivity = 0.2f;
     public float scrollSensitvity = 2f;
+    public float pinchSensitvity = 0.2f;
     public float orbitDampening = 20f;
     public float scrollDampening = 20f;
 
     public bool cameraDisabled = false;
 
+    private float previousPinchDistance = 0;
 
     // Use this for initialization
     void Start ()
     {
+        Application.targetFrameRate = 30;
+
         camTransform = transform;
         pivotTransform = transform.parent;
 
-        EnhancedTouchSupport.Enable ();
+        //EnhancedTouchSupport.Enable ();
     }
 
     public void FocusOnModel (Bounds modelBounds)
@@ -43,12 +47,14 @@ public class CameraSystem : MonoBehaviour
         if (cameraDisabled) return;
         if (InputValidation.IsPointerOverUIObject ()) return;
 
-        ApplyDesktopInput ();
-        ApplyTouchInput ();                
+        RegisterDesktopInput ();
+        RegisterTouchInput ();                
 
         //Actual Camera Rig Transformations
-        Quaternion QT = Quaternion.Euler (eulerRotation.x, eulerRotation.y, 0);
-        pivotTransform.rotation = Quaternion.Lerp (pivotTransform.rotation, QT, Time.deltaTime * orbitDampening);
+        Quaternion desiredRotation = Quaternion.Euler (eulerRotation.x, eulerRotation.y, 0);
+        pivotTransform.rotation = Quaternion.Lerp (pivotTransform.rotation, desiredRotation, Time.deltaTime * orbitDampening);
+
+        distanceFromPivot = Mathf.Clamp (distanceFromPivot, 1, 10000);
 
         if (camTransform.localPosition.z != distanceFromPivot * -1f)
         {
@@ -56,7 +62,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    private void ApplyDesktopInput ()
+    private void RegisterDesktopInput ()
     {
         if (Input.GetMouseButton (0))
         {
@@ -83,14 +89,58 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    private void ApplyTouchInput ()
+    private void RegisterTouchInput ()
     {
-        if (Touch.activeTouches.Count > 0)
+        if (Input.touchCount == 1 && Input.GetTouch (0).phase == TouchPhase.Moved)
         {
-            eulerRotation.y += Touch.activeTouches[0].delta.x * touchSensitivity;
-            eulerRotation.x -= Touch.activeTouches[0].delta.y * touchSensitivity;
+            eulerRotation.y += Input.GetTouch (0).deltaPosition.x * touchSensitivity;
+            eulerRotation.x -= Input.GetTouch (0).deltaPosition.y * touchSensitivity;
 
             eulerRotation.x = Mathf.Clamp (eulerRotation.x, -90f, 90f);
         }
+
+        if (Input.touchCount == 2 && (Input.GetTouch (0).phase == TouchPhase.Moved || Input.GetTouch (1).phase == TouchPhase.Moved))
+        {
+            float currentPinchDistance = Vector2.Distance (Input.GetTouch (0).position, Input.GetTouch (1).position);
+
+            if (Input.GetTouch (1).phase == TouchPhase.Began)
+            {
+                previousPinchDistance = currentPinchDistance;
+            }
+            else if (Input.GetTouch (1).phase == TouchPhase.Moved)
+            {
+                distanceFromPivot += (previousPinchDistance - currentPinchDistance) * pinchSensitvity;
+            }
+        }
+        /*
+        if (Touch.activeTouches.Count == 1)
+        {
+            if (Touch.activeTouches[0].phase == UnityEngine.InputSystem.TouchPhase.Began)
+            {
+                Touch.activeTouches[0].screenPosition
+            }
+            if (Touch.activeTouches[0].phase != UnityEngine.InputSystem.TouchPhase.Began)
+            {
+                eulerRotation.y += Touch.activeTouches[0].delta.x * touchSensitivity;
+                eulerRotation.x -= Touch.activeTouches[0].delta.y * touchSensitivity;
+
+                eulerRotation.x = Mathf.Clamp (eulerRotation.x, -90f, 90f);
+            }
+        }
+
+        if (Touch.activeTouches.Count == 2)
+        {
+            float currentPinchDistance = Vector2.Distance (Touch.activeTouches[0].screenPosition, Touch.activeTouches[1].screenPosition);
+
+            if (Touch.activeTouches[1].phase == UnityEngine.InputSystem.TouchPhase.Began)
+            {
+                previousPinchDistance = currentPinchDistance;
+            }
+            else if (Touch.activeTouches[1].phase == UnityEngine.InputSystem.TouchPhase.Moved)
+            {
+                distanceFromPivot += (previousPinchDistance - currentPinchDistance) * pinchSensitvity;
+            }
+        }
+        */
     }
 }
