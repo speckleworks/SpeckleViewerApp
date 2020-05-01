@@ -33,7 +33,7 @@ public class StreamSelectionBehaviour : MonoBehaviour
         {
             await manager.GetAllStreamMetaDataForUserAsync (CompleteInitialization);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             HandleError ();
         }
@@ -63,7 +63,7 @@ public class StreamSelectionBehaviour : MonoBehaviour
         {
             await manager.AddReceiverAsync (stream.StreamId, null, true);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             HandleError ();
         }
