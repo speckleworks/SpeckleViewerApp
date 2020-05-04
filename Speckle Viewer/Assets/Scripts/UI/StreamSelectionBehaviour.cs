@@ -33,9 +33,9 @@ public class StreamSelectionBehaviour : MonoBehaviour
         {
             await manager.GetAllStreamMetaDataForUserAsync (CompleteInitialization);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            HandleError ();
+            HandleError (e);
         }
     }
 
@@ -63,15 +63,16 @@ public class StreamSelectionBehaviour : MonoBehaviour
         {
             await manager.AddReceiverAsync (stream.StreamId, null, true);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            HandleError ();
+            HandleError (e);
         }
     }
 
-    protected virtual void HandleError ()
+    protected virtual void HandleError (Exception e)
     {
         dialogBox.Close ();
         errorDialog.Open ();
+        Debug.LogError (e.ToString ());
     }
 }

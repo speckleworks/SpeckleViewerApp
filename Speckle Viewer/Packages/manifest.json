@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "com.open.speckleunity": "0.7.0-preview",
+    "com.open.speckleunity": "file:H:/Git/SpeckleUnity/SpeckleUnity/Assets/SpeckleUnity",
     "com.unity.device-simulator": "2.2.2-preview",
     "com.unity.ide.visualstudio": "2.0.1",
     "com.unity.inputsystem": "1.0.0-preview.7",

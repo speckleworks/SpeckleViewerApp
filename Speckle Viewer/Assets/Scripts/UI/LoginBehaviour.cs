@@ -81,21 +81,24 @@ public class LoginBehaviour : MonoBehaviour
     private async Task RunAsyncLogin ()
     {
         manager.SetServerUrl (serverURL);
+        errorMessage.gameObject.SetActive (false);
 
         try
         {
             await manager.LoginAsync (email, password, LoginCallback);
 
         }
-        catch (SpeckleException)
+        catch (SpeckleException e)
         {
             errorMessage.gameObject.SetActive (true);
             errorMessage.text = "The email or password was incorrect. Please try again.";
+            Debug.LogError (e.ToString ());
         }
-        catch (TaskCanceledException)
+        catch (TaskCanceledException e)
         {
             errorMessage.gameObject.SetActive (true);
             errorMessage.text = "The server didn't respond in time. Please try again.";
+            Debug.LogError (e.ToString ());
         }
     }
 

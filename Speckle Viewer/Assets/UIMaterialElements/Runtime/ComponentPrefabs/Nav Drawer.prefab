@@ -429,7 +429,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Speckle Viewer v0.2.0a
+  m_Text: Speckle Viewer v0.2.1-alpha
 --- !u!1 &154308
 GameObject:
   m_ObjectHideFlags: 0
