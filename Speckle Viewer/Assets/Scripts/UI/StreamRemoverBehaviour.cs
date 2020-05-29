@@ -14,6 +14,11 @@ public class StreamRemoverBehaviour : StreamSelectionBehaviour
         CompleteInitialization (manager.GetCurrentReceivedStreamMetaData ());
     }
 
+    protected override void CompleteInitialization (SpeckleStream[] currentStreams)
+    {
+        ReconstructOptions (currentStreams);
+    }
+
     public override void SelectStream (SpeckleStream stream)
     {
         dialogBox.Close ();

@@ -1502,7 +1502,7 @@ MonoBehaviour:
   streamDataPrefab: {fileID: 4284069231333763393, guid: e10f048ff949aec47ab96fe7c15cd2c8, type: 3}
   dataRoot: {fileID: 517812424}
   errorDialog: {fileID: 578378543}
-  cameraSystem: {fileID: 0}
+  cameraSystem: {fileID: 263851086}
 --- !u!114 &517812427 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11463184, guid: 082542cfbb8fa9f4297abec3067902cc, type: 3}
@@ -2085,9 +2085,12 @@ MonoBehaviour:
   startLoginEmail: 
   startLoginPassword: 
   meshMaterial: {fileID: 2100000, guid: f5d636068d4d7da4998fa9effdda82d9, type: 2}
-  lineMaterial: {fileID: 0}
-  pointMaterial: {fileID: 0}
+  lineMaterial: {fileID: 2100000, guid: 127b8aaf2cf5ed243b487a48dc293f77, type: 2}
+  pointMaterial: {fileID: 2100000, guid: 127b8aaf2cf5ed243b487a48dc293f77, type: 2}
   renderingRule: {fileID: 11400000, guid: 7d66ffdb47f1cc445a885cea41fc7b43, type: 2}
+  recentreMeshTransforms: 0
+  lineWidth: 0.5
+  pointDiameter: 1
   spawnSpeed: 10
   onUpdateProgress:
     m_PersistentCalls:

@@ -1,0 +1,39 @@
+{
+    "m_SelectedDeviceId": "",
+    "m_SelectedPackage": {
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_PackagesForSerialization": [
+        {
+            "deviceId": "9AEAY1D9A8",
+            "name": "com.ea.game.starwarscapital_row",
+            "processId": 6620,
+            "exited": false
+        }
+    ],
+    "m_TagControl": {
+        "m_TagNames": [
+            "Filter by all listed tags",
+            "No Filter",
+            "",
+            "Tag Control...",
+            "",
+            "Unity",
+            "CRASH"
+        ],
+        "m_SelectedTags": [
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+        ]
+    },
+    "m_MemoryViewerJson": "{\"m_MemoryWindowHeight\":300.0,\"m_MemoryWindowWidth\":170.0,\"m_MemoryTypeEnabled\":[true,true,true,true,true,true,true,true,true,true],\"m_MemoryGroup\":1,\"m_MemoryViewerState\":1}"
+}

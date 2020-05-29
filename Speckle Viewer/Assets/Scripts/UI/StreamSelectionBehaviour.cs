@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 using MaterialUI;
 using SpeckleCore;
 using SpeckleUnity;
+using System.IO;
 
 public class StreamSelectionBehaviour : MonoBehaviour
 {
@@ -39,7 +41,36 @@ public class StreamSelectionBehaviour : MonoBehaviour
         }
     }
 
-    protected virtual void CompleteInitialization (SpeckleStream[] streams)
+    protected virtual void CompleteInitialization (SpeckleStream[] availableStreams)
+    {
+        ReconstructOptions (FilterForNewStreams (availableStreams));
+    }
+
+    protected SpeckleStream[] FilterForNewStreams (SpeckleStream[] availableStreams)
+    {
+        SpeckleStream[] currentStreams = manager.GetCurrentReceivedStreamMetaData ();
+        List<SpeckleStream> filteredStreams = new List<SpeckleStream> ();
+
+        for (int i = 0; i < availableStreams.Length; i++)
+        {
+            bool streamAlreadyLoaded = false;
+
+            for (int j = 0; j < currentStreams.Length; j++)
+            {
+                if (availableStreams[i].StreamId == currentStreams[j].StreamId)
+                {
+                    streamAlreadyLoaded = true;
+                    break;
+                }
+            }
+
+            if (!streamAlreadyLoaded) filteredStreams.Add (availableStreams[i]);
+        }
+
+        return filteredStreams.ToArray ();
+    }
+
+    protected virtual void ReconstructOptions (SpeckleStream[] streams)
     {
         foreach (Transform child in dataRoot)
         {

@@ -41,7 +41,7 @@ public class CameraSystem : MonoBehaviour
     public void FocusOnModel (Bounds modelBounds)
     {
         eulerRotation = new Vector3 (15, 30, 0);
-        distanceFromPivot = modelBounds.size.magnitude * 0.75f;
+        distanceFromPivot = modelBounds.size.magnitude;
         pivotTransform.position = modelBounds.center;
     }
 

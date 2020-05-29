@@ -31,10 +31,10 @@ namespace MaterialUI
                 TextureImporter importer = assetImporter as TextureImporter;
                 importer.textureType = TextureImporterType.Default;
                 importer.npotScale = TextureImporterNPOTScale.None;
-                importer.generateCubemap = TextureImporterGenerateCubemap.None;
+                importer.textureShape = TextureImporterShape.Texture2D;
                 importer.spriteImportMode = SpriteImportMode.Single;
                 importer.wrapMode = TextureWrapMode.Clamp;
-                importer.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+                importer.textureCompression = TextureImporterCompression.Uncompressed;
                 importer.filterMode = FilterMode.Trilinear;
                 //			Debug.Log(GlobalVars.shadowSpriteBorder);
                 importer.spriteBorder = MaterialGlobals.shadowSpriteBorder;
