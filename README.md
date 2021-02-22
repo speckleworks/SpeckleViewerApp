@@ -6,6 +6,12 @@ A new, open source and performant viewer app designed for mobile. The Speckle Vi
 
 In this repository you will find the source code, assets and project settings of the Speckle Viewer App (Unity 2020.1 or newer recommended).
 
+## ⚠️ IMPORTANT ⚠️
+
+Speckle v1 has reached EOL and is no longer mainatined. Check out our brand new 👉 [Speckle v2](https://github.com/specklesystems)!
+Read more about the announcemnt [here](https://speckle.systems/blog/speckle2-vision-and-faq) and check out or new [website](https://speckle.systems).
+
+
 ---
 
 ## Roadmap
